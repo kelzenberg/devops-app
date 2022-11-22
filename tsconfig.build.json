@@ -1,0 +1,26 @@
+{
+  // Note: This config is ONLY for production builds & overwrites the base tsconfig.json
+
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    /* Language and Environment */
+    "incremental": false, // Save .tsbuildinfo files to allow for incremental compilation of projects.
+    "target": "es6", // Set the JavaScript language version for emitted JavaScript and include compatible library declarations.
+
+    /* Emit */
+    "sourceMap": false, // Create source map files for emitted JavaScript files.
+  },
+  "exclude": [ // Specifies a list of files to be excluded from compilation.
+    "node_modules",
+    "**/node_modules",
+    "dist",
+    "**/dist",
+    "coverage",
+    "**/coverage",
+    "tmp",
+    "**/tmp",
+    "**/*.test.{js,ts}",
+    "**/*.spec.{js,ts}",
+    "**/*mock*.{js,ts}"
+  ]
+}

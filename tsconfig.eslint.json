@@ -1,0 +1,9 @@
+{
+  // Note: This config is ONLY for eslint & overwrites the base tsconfig.json
+
+  "extends": "./tsconfig.json", // Extends base config to share compilerOptions etc.
+  "compilerOptions": {
+    "noEmit": true // Ensures no accidental builds from this config
+  },
+  "include": ["src"], // Paths supposed to be linted (on top of tsconfig.json)
+}

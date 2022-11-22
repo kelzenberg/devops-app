@@ -1,0 +1,44 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 13,
+    "sourceType": "module",
+    "project": ["./tsconfig.eslint.json"]
+  },
+  "env": {
+    "es2022": true,
+    "node": true,
+    "browser": true
+  },
+  "plugins": ["@typescript-eslint", "prettier", "unicorn"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:unicorn/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    // always make sure the prettier/recommended rules come last in array
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    /* GENERAL */
+    "prettier/prettier": "error",
+    "no-console": "warn",
+
+    /* IMPORTS */
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["**/node_modules/*", "**/*.test.{js,ts}", "**/*.spec.{js,ts}", "**/*mock*.{js,ts}"]
+      }
+    ],
+
+    /* FILES */
+    "unicorn/filename-case": [
+      "error",
+      {
+        "case": "kebabCase"
+      }
+    ]
+  }
+}

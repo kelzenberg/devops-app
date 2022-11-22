@@ -1,3 +1,9 @@
 FROM docker.io/node:18
 
-COPY ./
+RUN mkdir /app
+WORKDIR /app
+
+COPY . .
+
+RUN yarn
+RUN yarn compile

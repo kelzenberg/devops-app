@@ -1,4 +1,4 @@
-FROM docker.io/node:18
+FROM docker.io/node:19.1
 
 RUN mkdir /app
 WORKDIR /app

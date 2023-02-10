@@ -23,7 +23,7 @@
   "rules": {
     /* GENERAL */
     "prettier/prettier": "error",
-    "no-console": "warn",
+    // "no-console": "warn",
 
     /* IMPORTS */
     "no-restricted-imports": [

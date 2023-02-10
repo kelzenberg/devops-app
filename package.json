@@ -1,16 +1,16 @@
 {
   "name": "devops-app",
   "version": "0.0.1",
-  "description": "This is a project description",
-  "author": "Kelzenberg <kelzenberg@users.noreply.github.com> (https://github.com/kelzenberg)",
+  "description": "This is the one app to be provisioned & allocated!",
+  "author": "Steffen Ansorge <kelzenberg@users.noreply.github.com> (https://github.com/kelzenberg)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kelzenberg/devops-app.git"
   },
   "license": "MIT",
-  "private": false,
+  "private": true,
   "engines": {
-    "node": ">=18.6.0"
+    "node": ">=19.1.0"
   },
   "scripts": {
     "dev": "tsc --project ./tsconfig.json --watch",

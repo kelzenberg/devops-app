@@ -13,11 +13,13 @@
     "node": ">=19.1.0"
   },
   "scripts": {
-    "dev": "tsc --project ./tsconfig.json --watch",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --ignore-path ./.gitignore --write \"**/*.+(js|ts|json)\"",
-    "compile": "rm -rf ./dist && tsc --project ./tsconfig.build.json"
+    "compile": "tsc --project ./tsconfig.json --watch",
+    "build": "yarn clean && tsc --project ./tsconfig.build.json",
+    "dev": "run.env -p ./.env ts-node --project ./tsconfig.json --files ./src",
+    "clean": "rimraf {dist,*.tsbuildinfo,*.log,coverage}"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",

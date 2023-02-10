@@ -7,4 +7,6 @@ coverage
 tmp
 **/tmp
 
+**/jest.config.*
+
 **/*.tsbuildinfo

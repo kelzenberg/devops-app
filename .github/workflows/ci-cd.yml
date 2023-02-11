@@ -19,7 +19,28 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Setup required Node version
+      # https://github.com/actions/setup-node
+      - name: Setup Node version
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: "yarn"
+
+      - name: Install modules
+        run: yarn install --frozen-lockfiles
+
   build-and-push:
+    needs: [build]
     runs-on: ubuntu-latest
     permissions:
       contents: read

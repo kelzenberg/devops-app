@@ -15,6 +15,7 @@ export const errorHandler = (error: HttpError, request: Request, response: Respo
     return;
   }
 
-  console.error('An error occurred:', error);
+  const logLevel = ['production', 'staging'].includes(process.env.NODE_ENV as string) ? 'error' : 'warn';
+  console[logLevel]('An error occurred:', error);
   response.json({});
 };

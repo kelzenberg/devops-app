@@ -10,7 +10,11 @@ const server = createApp().listen(port, () =>
 
 export const shutdownServer = () => {
   console.info('Server is stopping...');
-  server.close(() => console.info('Server stopped.'));
+  server.close(
+    ['production', 'staging'].includes(process.env.NODE_ENV as string)
+      ? () => console.info('Server stopped.')
+      : undefined
+  );
 };
 
 process.once('SIGINT', shutdownServer);

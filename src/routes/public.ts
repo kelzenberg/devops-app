@@ -11,12 +11,6 @@ const readinessHandler = async (_: Request, response: Response) => {
   response.status(200).send("I'm ready!");
 };
 
-const failHandler = async () => {
-  await Promise.resolve(); // fake asynchronous operation
-  throw new Error("This is an error that is returned intentionally and shouldn't break the server 🤓");
-};
-
 export const publicRoutes = Router()
   .get('/liveness', asyncHandler(livenessHandler))
-  .get('/readiness', asyncHandler(readinessHandler))
-  .get('/fail', asyncHandler(failHandler));
+  .get('/readiness', asyncHandler(readinessHandler));

@@ -12,13 +12,13 @@ describe('App Middlewares', () => {
       expect(apiKey).toBeDefined();
 
       if (apiKey) {
-        const response = await testRequest().get('/').set('x-api-key', apiKey);
+        const response = await testRequest().get('/hello').set('x-api-key', apiKey);
         expect(response.status).toBe(200);
       }
     });
 
     it('should return 401 for a protected route if no API key was provided', async () => {
-      const response = await testRequest().get('/');
+      const response = await testRequest().get('/fail');
       expect(response.status).toBe(401);
     });
   });

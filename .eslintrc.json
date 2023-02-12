@@ -40,5 +40,19 @@
         "case": "kebabCase"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      // Overrides for Model files
+      "files": ["**/model/*", "**/models/*"],
+      "rules": {
+        "unicorn/filename-case": [
+          "error",
+          {
+            "case": "pascalCase"
+          }
+        ]
+      }
+    }
+  ]
 }

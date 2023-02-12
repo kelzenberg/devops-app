@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: ./
+      args:
+        - NODE_ENV=${NODE_ENV}
+    container_name: devops-app
+    ports:
+      - 8080:3000
+    command: node dist/index.js
+
+  database:
+    image: postgres:15.2
+    container_name: devops-database
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGLOGGING: ${PGLOGGING}
+    ports:
+      - 5432:5432

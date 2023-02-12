@@ -7,7 +7,7 @@ const throwHandler = async () => {
 };
 
 export const protectedRoutes = Router()
-  .get('/', (_, response): void => {
+  .get('/hello', (_, response): void => {
     response.status(200).send('Hello there!');
   })
   .get('/fail', asyncHandler(throwHandler));

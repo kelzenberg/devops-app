@@ -1,11 +1,9 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Message } from '../models/Message';
 
-export const sequelizeInstance = new Sequelize({
-  username: process.env.POSTGRES_USER || 'post',
-  password: process.env.POSTGRES_PASSWORD || '',
-  database: process.env.POSTGRES_DB || 'devops',
-  port: 5432,
+if (!process.env.DATABASE_URL?.length) throw new Error('Database URL not found');
+
+export const sequelizeInstance = new Sequelize(process.env.DATABASE_URL || '', {
   dialect: 'postgres',
   retry: {
     match: [/SequelizeConnectionError/],

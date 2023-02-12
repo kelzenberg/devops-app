@@ -7,9 +7,14 @@ services:
       args:
         - NODE_ENV=${NODE_ENV}
     container_name: devops-app
+    environment:
+      DATABASE_URL: 'postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}'
+      PG_LOGGING: ${PG_LOGGING}
     ports:
       - 8080:3000
     command: node dist/index.js
+    depends_on:
+      - database
 
   database:
     image: postgres:15.2

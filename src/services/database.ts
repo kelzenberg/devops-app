@@ -15,6 +15,6 @@ export const sequelizeInstance = new Sequelize({
     timestamps: true,
     underscored: true,
   },
-  logging: process.env.PGLOGGING === 'true' ? true : false,
+  logging: process.env.PG_LOGGING === 'true' ? true : false,
   models: [Message],
 });

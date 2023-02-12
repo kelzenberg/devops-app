@@ -21,6 +21,7 @@
     "build": "yarn clean && tsc --project ./tsconfig.build.json",
     "dev": "run.env -p ./.env ts-node --project ./tsconfig.json --files ./src",
     "clean": "rimraf {dist,*.tsbuildinfo,*.log,coverage}",
+    "up": "docker-compose up",
     "docker:build": "docker build --build-arg NODE_ENV=local --tag devops-app-image -f Dockerfile ./",
     "docker:run": "docker run -d -p 8080:3000 --name devops-app devops-app-image node \"dist/index.js\""
   },

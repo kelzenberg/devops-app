@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response, Router } from 'express';
+import { sequelizeInstance } from '../services/database';
 
 const livenessHandler = async (_: Request, response: Response) => {
   await Promise.resolve();
@@ -7,7 +8,11 @@ const livenessHandler = async (_: Request, response: Response) => {
 };
 
 const readinessHandler = async (_: Request, response: Response) => {
-  await Promise.resolve();
+  await Promise.all([
+    sequelizeInstance.authenticate(),
+    sequelizeInstance.query('SELECT 1', { useMaster: true }),
+    sequelizeInstance.query('SELECT 1', { useMaster: false }),
+  ]);
   response.status(200).send("I'm ready!");
 };
 

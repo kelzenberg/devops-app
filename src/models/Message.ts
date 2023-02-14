@@ -12,6 +12,7 @@ type MessageCreateAttributes = Optional<MessageAttributes, 'id'>;
 
 @Table({
   timestamps: true,
+  tableName: 'message',
 })
 export class Message extends Model<MessageAttributes, MessageCreateAttributes> {
   @PrimaryKey
@@ -22,11 +23,11 @@ export class Message extends Model<MessageAttributes, MessageCreateAttributes> {
 
   @AllowNull(false)
   @Column
-  content!: string;
+  author!: string;
 
   @AllowNull(false)
   @Column
-  author!: string;
+  content!: string;
 
   @CreatedAt
   @Column

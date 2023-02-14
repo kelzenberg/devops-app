@@ -1,9 +1,4 @@
-name: CI & CD
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
+name: Build, Push & Deploy
 
 on:
   push:
@@ -108,3 +103,21 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy-to-staging:
+    needs: [build-and-push]
+    runs-on: self-hosted
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # https://github.com/medyagh/setup-minikube
+      - name: Start Minikube
+        id: minikube
+        uses: medyagh/setup-minikube@v0.0.11
+
+      - name: Get Minikube k8s cluster info
+        run: kubectl cluster-info

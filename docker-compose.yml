@@ -14,6 +14,7 @@ services:
       - 8080:3000
     command: node dist/index.js
     depends_on:
+      - migration
       - database
 
   database:
@@ -25,3 +26,18 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - 5432:5432
+
+  migration:
+    image: flyway/flyway:9.4.0
+    container_name: devops-database-migration
+    environment:
+      FLYWAY_URL: jdbc:postgresql://database/${POSTGRES_DB}
+      FLYWAY_USER: ${POSTGRES_USER}
+      FLYWAY_PASSWORD: ${POSTGRES_PASSWORD}
+    command:
+      - -connectRetries=60
+      - migrate
+    volumes:
+      - ./sql:/flyway/sql
+    depends_on:
+      - database

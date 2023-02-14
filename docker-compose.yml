@@ -14,8 +14,8 @@ services:
       - 8080:3000
     command: node dist/index.js
     depends_on:
-      - database
       - migration
+      - database
 
   database:
     image: postgres:15.2

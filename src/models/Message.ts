@@ -1,14 +1,24 @@
 import { Optional } from 'sequelize';
-import { AllowNull, AutoIncrement, Column, CreatedAt, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import {
+  AllowNull,
+  AutoIncrement,
+  Column,
+  CreatedAt,
+  DataType,
+  Model,
+  PrimaryKey,
+  Table,
+  Unique,
+} from 'sequelize-typescript';
 
 export interface MessageAttributes {
   id: number;
-  content: string;
   author: string;
+  content: string;
   createdAt: Date;
 }
 
-type MessageCreateAttributes = Optional<MessageAttributes, 'id'>;
+export type MessageCreateAttributes = Optional<MessageAttributes, 'id' | 'createdAt'>;
 
 @Table({
   timestamps: true,
@@ -18,7 +28,7 @@ export class Message extends Model<MessageAttributes, MessageCreateAttributes> {
   @PrimaryKey
   @AutoIncrement
   @Unique
-  @Column
+  @Column(DataType.INTEGER)
   id!: number;
 
   @AllowNull(false)

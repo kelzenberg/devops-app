@@ -18,7 +18,7 @@ describe('App Middlewares', () => {
     });
 
     it('should return 401 for a protected route if no API key was provided', async () => {
-      const response = await testRequest().get('/fail');
+      const response = await testRequest().get('/hello');
       expect(response.status).toBe(401);
     });
   });
@@ -27,6 +27,16 @@ describe('App Middlewares', () => {
     it('should return 401 for a non-existing route', async () => {
       const response = await testRequest().get('/me-no-exist');
       expect(response.status).toBe(401);
+    });
+
+    it('should return 301 if no route was found (with API key provided)', async () => {
+      const apiKey = process.env.API_KEY_TEST;
+      expect(apiKey).toBeDefined();
+
+      if (apiKey) {
+        const response = await testRequest().get('/foo').set('x-api-key', apiKey);
+        expect(response.status).toBe(301);
+      }
     });
 
     it('should return 500 if an error was thrown but not caught', async () => {

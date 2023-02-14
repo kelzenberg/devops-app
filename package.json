@@ -18,7 +18,7 @@
     "format": "prettier --ignore-path ./.gitignore --write \"**/*.+(js|ts|json)\"",
     "test": "jest --runInBand --testMatch '**/*.test.ts'",
     "compile": "tsc --project ./tsconfig.json --watch",
-    "build": "yarn clean && tsc --project ./tsconfig.build.json",
+    "build": "yarn clean && tsc --project ./tsconfig.build.json && cp -R ./src/public ./dist",
     "dev": "run.env -p ./.env ts-node --project ./tsconfig.json --files ./src",
     "clean": "rimraf {dist,*.tsbuildinfo,*.log,coverage}",
     "up": "docker-compose up",

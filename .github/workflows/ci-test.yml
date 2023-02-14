@@ -19,12 +19,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3
 
       # Setup required Node version
       # https://github.com/actions/setup-node
       - name: Setup Node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version-file: .nvmrc
           cache: yarn
@@ -40,12 +40,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3
 
       # Setup required Node version
       # https://github.com/actions/setup-node
       - name: Setup Node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version-file: .nvmrc
           cache: yarn

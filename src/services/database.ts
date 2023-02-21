@@ -1,9 +1,21 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Message } from '../models/Message';
 
-if (!process.env.DATABASE_URL?.length) throw new Error('Database URL not found');
+const getDatabaseURL = () => {
+  const [user, password, host, database] = ['user', 'password', 'host', 'db'].map(name => {
+    const environmentValue = `${process.env['POSTGRES_' + name.toUpperCase()] || ''}`;
+    if (environmentValue.trim().length === 0) {
+      throw new Error(`Database ${name.toUpperCase()} not found in environment.`);
+    } else {
+      return environmentValue;
+    }
+  });
 
-export const sequelizeInstance = new Sequelize(process.env.DATABASE_URL || '', {
+  return `postgres://${user}:${password}@${host}/${database}`;
+};
+
+const databaseURL = getDatabaseURL();
+export const sequelizeInstance = new Sequelize(databaseURL, {
   dialect: 'postgres',
   retry: {
     match: [/SequelizeConnectionError/],

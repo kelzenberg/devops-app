@@ -9,9 +9,12 @@ export const createApp = (): Express => {
   const app = express().disable('x-powered-by');
 
   app.use(bodyParser.json());
+
   app.use(publicRoutes);
   app.use(authorizer);
   app.use(protectedRoutes);
+
+  app.use('*', (_, response) => response.redirect(301, '/'));
   app.use(errorHandler);
 
   return app;

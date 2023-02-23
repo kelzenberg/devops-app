@@ -19,7 +19,7 @@ ENV YARN_CACHE_FOLDER /home/node/.yarn
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 ENV PATH=$PATH:/home/node/.npm-global/bin
 
-ENV FLYWAY_VERSION 9.15.1
+ENV FLYWAY_VERSION 9.4.0
 
 RUN mkdir flyway && \
   wget -q https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}-linux-x64.tar.gz && \

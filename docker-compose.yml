@@ -8,7 +8,11 @@ services:
         - NODE_ENV=${NODE_ENV}
     container_name: devops-app
     environment:
-      DATABASE_URL: 'postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}'
+      API_KEY_DEV: ${API_KEY_DEV}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: database:5432
+      POSTGRES_DB: ${POSTGRES_DB}
       PG_LOGGING: ${PG_LOGGING}
     ports:
       - 8080:3000
@@ -28,7 +32,7 @@ services:
       - 5432:5432
 
   migration:
-    image: flyway/flyway:9.15.1
+    image: flyway/flyway:9.4.0
     container_name: devops-database-migration
     environment:
       FLYWAY_URL: jdbc:postgresql://database/${POSTGRES_DB}

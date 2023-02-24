@@ -114,10 +114,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # https://github.com/medyagh/setup-minikube
-      - name: Start Minikube
-        id: minikube
-        uses: medyagh/setup-minikube@v0.0.11
-
-      - name: Get Minikube k8s cluster info
-        run: kubectl cluster-info
+      # Setup kubectl for local k8s cluster
+      # https://github.com/steebchen/kubectl
+      - name: Test Kubectl
+        uses: steebchen/kubectl@v2.1.1
+        with:
+          config: ${{ secrets.MINIKUBE_KUBE_CONFIG }}
+          command: kubectl get pods

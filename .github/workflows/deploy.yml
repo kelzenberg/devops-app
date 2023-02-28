@@ -22,4 +22,4 @@ jobs:
           token: ${{ secrets.INFRA_REPO_TOKEN }}
 
       - name: Update deployment image
-        run: make deploy-app-staging
+        run: make deploy-app-${{ inputs.environment }}

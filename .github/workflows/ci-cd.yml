@@ -19,12 +19,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       # Setup required Node version
       # https://github.com/actions/setup-node
       - name: Setup Node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version-file: .nvmrc
           cache: yarn
@@ -40,12 +40,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       # Setup required Node version
       # https://github.com/actions/setup-node
       - name: Setup Node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version-file: .nvmrc
           cache: yarn
@@ -65,7 +65,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
@@ -95,7 +95,7 @@ jobs:
       # Note: Permissions needed to be fixed. See https://github.com/docker/build-push-action/issues/463#issuecomment-924995909
       - name: Build and push
         id: build-and-push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v4.0
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
@@ -106,19 +106,14 @@ jobs:
 
   deploy-to-staging:
     needs: [build-and-push]
-    runs-on: self-hosted
-    permissions:
-      contents: read
+    uses: ./.github/actions/deploy.yml
+    with:
+      environment: staging
+    secrets: inherit
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          repository: 'kelzenberg/devops-app-infra'
-          token: ${{ secrets.INFRA_REPO_TOKEN }}
-
-      - name: Check for k8s config files
-        run: kubectl apply --dry-run='server' -f ./src/.k8s/namespaces/staging.yaml
-
-      - name: Test kubectl natively
-        run: kubectl get namespaces
+  deploy-to-production:
+    needs: [deploy-to-staging]
+    uses: ./.github/actions/deploy.yml
+    with:
+      environment: staging
+    secrets: inherit

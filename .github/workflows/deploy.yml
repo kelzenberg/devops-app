@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
         with:
           repository: "kelzenberg/devops-app-infra"
           token: ${{ secrets.INFRA_REPO_TOKEN }}

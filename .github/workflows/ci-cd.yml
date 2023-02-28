@@ -116,5 +116,5 @@ jobs:
     needs: [deploy-to-staging]
     uses: ./.github/workflows/deploy.yml
     with:
-      environment: staging
+      environment: production
     secrets: inherit

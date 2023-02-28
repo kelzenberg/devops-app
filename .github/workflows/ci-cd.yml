@@ -113,14 +113,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          repository: 'kelzenberg/devops-app-infra'
+          token: ${{ secrets.INFRA_REPO_TOKEN }}
+
+      - name: Check for k8s config files
+        run: kubectl apply --dry-run='server' -f ./src/.k8s/namespaces/staging.yaml
 
       - name: Test kubectl natively
-        run: kubectl get pods
-
-      # # Setup kubectl for local k8s cluster
-      # # https://github.com/steebchen/kubectl
-      # - name: Test Kubectl
-      #   uses: steebchen/kubectl@v2.1.1
-      #   with:
-      #     config: ${{ secrets.MINIKUBE_KUBE_CONFIG }}
-      #     command: kubectl get pods
+        run: kubectl get namespaces

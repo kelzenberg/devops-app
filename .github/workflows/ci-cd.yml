@@ -107,14 +107,14 @@ jobs:
 
   deploy-to-staging:
     needs: [build-and-push]
-    uses: ./.github/actions/deploy.yml
+    uses: ./.github/actions/deploy.yml@master
     with:
       environment: staging
     secrets: inherit
 
   deploy-to-production:
     needs: [deploy-to-staging]
-    uses: ./.github/actions/deploy.yml
+    uses: ./.github/actions/deploy.yml@master
     with:
       environment: staging
     secrets: inherit

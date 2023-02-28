@@ -106,13 +106,14 @@ jobs:
 
   deploy-to-staging:
     needs: [build-and-push]
-    runs-on: self-hosted
-    permissions:
-      contents: read
+    uses: ./.github/actions/deploy.yml
+    with:
+      environment: staging
+    secrets: inherit
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3.3
-
-      - name: Test kubectl natively
-        run: kubectl get namespaces
+  deploy-to-production:
+    needs: [deploy-to-staging]
+    uses: ./.github/actions/deploy.yml
+    with:
+      environment: staging
+    secrets: inherit

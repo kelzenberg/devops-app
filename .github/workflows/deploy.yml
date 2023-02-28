@@ -1,0 +1,25 @@
+name: Deploy on self-hosted runner
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.environment }}
+    runs-on: self-hosted
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: "kelzenberg/devops-app-infra"
+          token: ${{ secrets.INFRA_REPO_TOKEN }}
+
+      - name: Update deployment image
+        run: make deploy-app-staging

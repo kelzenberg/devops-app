@@ -1,6 +1,7 @@
 name: Build, Push & Deploy
 
 on:
+  workflow_dispatch: # manual workflow trigger
   push:
     branches: [master]
     # Publish semver tags as releases.

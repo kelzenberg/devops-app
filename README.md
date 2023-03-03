@@ -56,6 +56,8 @@ Run `yarn install` once to install dependencies.
   yarn clean
   ```
 
+**Note:** Branch protection for main/master branch is active and prevents direct pushes to it. Open a new pull request and merge/rebase the PR into the main/master branch.
+
 ## Backend API
 
 ### Public Routes
@@ -82,3 +84,20 @@ For local development, run `cp .env.dist .env` and use/replace the `API_KEY_DEV`
   ```
 - `GET /hello` When in need of a friendly British 👋
 - `GET /fail` A on-purpose error-throwing endpoint for more chaos in life.
+
+## CI / CD Workflows
+
+### Continuous Integration Workflow ([ci.yml](./.github/workflows/ci.yml))
+
+The continuous integration workflow to build (TypeScript) and unit-test (Jest) the app will be run if GitHub Actions recognizes...
+
+- push on any branch
+- pull request reopened
+
+### Continuous Integration & Deployment Workflow ([ci-cd.yml](./.github/workflows/ci-cd.yml))
+
+The continuous integration and deployment workflow to build, unit-test the app as well as build the container image and push it to the [ghcr.io](https://github.com/kelzenberg/devops-app/pkgs/container/devops-app) container registry will be run if GitHub Actions recognizes...
+
+- a semver version tagged commit
+
+To trigger a new deployment, simply tag a commit `git tag v*.*.*` with a semver version compatible tag e.g. `v1.33.7` and push the tag `git push --tags`.

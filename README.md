@@ -1,17 +1,24 @@
 # DevOps App
 
-This is a project description.
+**_The DevOps app to be deployed with [Infrastructure as Code (repo)](https://github.com/kelzenberg/devops-app-infra)._**
+
+- [NodeJS](https://nodejs.org/) [TypeScript](https://www.typescriptlang.org) [ExpressJS](https://expressjs.com) backend server
+- [PostgreSQL](https://www.postgresql.org) database with [Sequelize](https://sequelize.org) ORM and [Flyway](https://flywaydb.org/documentation/concepts/migrations.html) migrations
+- [Dockerfile](https://docs.docker.com/engine/reference/builder) and [Compose](https://docs.docker.com/compose/compose-file) for containerization
+- Using [GitHub Workflows](https://docs.github.com/en/actions/using-workflows) ([here](./.github/workflows)) and [self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners) ([here](https://github.com/kelzenberg/devops-app-infra)) for CI/CD.
 
 ## Develop the project
 
-Run `yarn install` once to install dependencies.  
+Run `yarn install` once to install dependencies.
 
-- Start TS compiler in watch mode
+- Start app in TS execution environment
+
   ```sh
   yarn dev
   ```
 
 - Lint project
+
   ```sh
   yarn lint
   # or
@@ -19,13 +26,59 @@ Run `yarn install` once to install dependencies.
   ```
 
 - Format project
+
   ```sh
   yarn format
   ```
 
-- Compile project
+- Build project
+
   ```sh
-  yarn compile
+  yarn compile # transpile TS in watch-mode
+  # or
+  yarn build # build deployable artefacts
   ```
 
+- Run unit tests
 
+  ```sh
+  yarn test
+  ```
+
+- Create and start containers
+
+  ```sh
+  yarn up
+  ```
+
+- Clean artefacts
+  ```sh
+  yarn clean
+  ```
+
+## Backend API
+
+### Public Routes
+
+All "publicly" accessible routes (e.g. within K8s cluster).
+
+- `GET /` Static served HTML page (Displaying all `Message` rows in the database)
+- `GET /liveness` App-is-alive probe for Kubernetes (Express server running)
+- `GET /readiness` App-is-ready probe for Kubernetes (Database connection established)
+
+### Protected Routes
+
+To access these routes, the request needs to authenticate with an `x-api-key` API key which value needs to match an environment variable in the app's environment starting with `API_KEY_*` .
+
+For local development, run `cp .env.dist .env` and use/replace the `API_KEY_DEV` value in the `.env` file.
+
+- `POST /message` Create a new `Message` (Stores it in the database)  
+  Example JSON body:
+  ```json
+  {
+    "author": "Dev-Ops Kenobi",
+    "content": "Hello There!"
+  }
+  ```
+- `GET /hello` When in need of a friendly British 👋
+- `GET /fail` A on-purpose error-throwing endpoint for more chaos in life.

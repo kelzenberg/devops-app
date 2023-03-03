@@ -3,7 +3,6 @@ name: Continuous Integration & Deployment
 on:
   workflow_dispatch: # manual workflow trigger
   push:
-    branches: [master]
     # Publish semver tags as releases.
     tags: [v*.*.*]
 

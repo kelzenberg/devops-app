@@ -1,4 +1,4 @@
-name: Build, Push & Deploy
+name: Continuous Integration & Deployment
 
 on:
   workflow_dispatch: # manual workflow trigger
@@ -13,52 +13,12 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-app:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3.3.0
-
-      # Setup required Node version
-      # https://github.com/actions/setup-node
-      - name: Setup Node version
-        uses: actions/setup-node@v3.6.0
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-
-      - name: Install modules
-        run: yarn install --frozen-lockfiles
-
-  test:
-    needs: [build-app]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3.3.0
-
-      # Setup required Node version
-      # https://github.com/actions/setup-node
-      - name: Setup Node version
-        uses: actions/setup-node@v3.6.0
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-
-      - name: Install modules
-        run: yarn install --frozen-lockfile
-
-      - name: Run tests
-        run: yarn test
+  build-and-test:
+    uses: ./.github/workflows/build-and-test.yml
+    secrets: inherit
 
   build-and-push:
-    needs: [build-app, test]
+    needs: [build-and-test]
     runs-on: ubuntu-latest
     permissions:
       contents: read

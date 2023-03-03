@@ -68,6 +68,7 @@ jobs:
     needs: [build-and-push]
     uses: ./.github/workflows/deploy.yml
     with:
+      tag: ${{ github.ref_name }}
       environment: staging
     secrets: inherit
 
@@ -75,5 +76,6 @@ jobs:
     needs: [deploy-to-staging]
     uses: ./.github/workflows/deploy.yml
     with:
+      tag: ${{ github.ref_name }}
       environment: production
     secrets: inherit

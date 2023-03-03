@@ -3,6 +3,9 @@ name: Deploy on self-hosted runner
 on:
   workflow_call:
     inputs:
+      tag:
+        required: true
+        type: string
       environment:
         required: true
         type: string
@@ -22,4 +25,4 @@ jobs:
           token: ${{ secrets.INFRA_REPO_TOKEN }}
 
       - name: Update deployment image
-        run: make deploy-app-${{ inputs.environment }}
+        run: make deploy-app-${{ inputs.environment }} TAG=${{ inputs.tag }}
